@@ -1,28 +1,30 @@
 import AlunoItem from "@/componentes/AlunoItem";
-import { User } from "lucide-react";
+import { getAlunos } from "./actions";
+import Link from "next/link";
 
 export default async function AlunosPage() {
+    const alunos= await getAlunos();
 
-    const alunos= await fetch("http://localhost:8080/alunos").then((res) => res.json(),
-    );
-
-    console.log(alunos);
 
     return (
         <div className="w-full min-h-screen flex justify-center items-start bg-gray-700 p-8">
 
             <div className="w-full max-w-2xl">
 
-                <h1 className="text-4xl font-bold mb-8 text-center text-blue-200">
+                <h1 className="text-4xl font-bold mb-8 text-center text-gray-200">
                     Lista de Alunos
                 </h1>
 
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                     <ul className="space-y-3">
-                        <AlunoItem id={1} nome="Aluno 1" />
+                        {alunos.map((aluno) => (
+                            <AlunoItem key={aluno.id} nome={aluno.name} id={aluno.id}/>
+                        ))}
                     </ul>
                 </div>
             </div>
+            <Link href="/aluno/cadastro"
+            className="px-5 py-2 bg-white text-black mt-5 rounded-lg">Cadastro Aluno</Link>
         </div>
     );
 }
