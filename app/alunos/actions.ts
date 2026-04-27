@@ -2,13 +2,15 @@
 
 import { cookies } from "next/headers";
 import { Aluno } from "@/interfaces/alunos";
+import { revalidateTag } from "next/cache";
 
 export async function getAlunos() {
     const cookiesStore = await cookies();
     const token = cookiesStore.get("access_token")?.value;
 
     const response = await fetch("http://localhost:8080/alunos", {headers: { Authorization: `Bearer ${token}`,
-     }
+     },
+     next: {tags: ["listar"]},
     })
     .then((res) => res.json())
     .catch((e) => {
@@ -16,4 +18,24 @@ export async function getAlunos() {
         return [];
     })
     return response as Aluno[];
+}
+
+export async function deleteAluno(id: number) {
+    const cookiesStore = await cookies();
+    const token = cookiesStore.get("access_token")?.value;
+
+    const response = await fetch(`http://localhost:8080/alunos/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+        revalidateTag("listar", "max");
+        return;
+    }
+    return data;
 }

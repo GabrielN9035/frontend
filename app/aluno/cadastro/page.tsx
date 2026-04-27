@@ -26,6 +26,8 @@ export default function AlunoCadastroPage() {
             setCpf("");
             setEmail("");
             router.push("/alunos");
+
+            return;
         }
         alert(response);
     }
