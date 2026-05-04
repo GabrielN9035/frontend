@@ -10,7 +10,7 @@ export async function getAlunos() {
     const cookiesStore = await cookies();
     const token = cookiesStore.get("access_token")?.value;
 
-    const response = await fetch("http://localhost:8080/alunos", {
+    const response = await fetch("http://localhost:8080/cursos", {
       headers: { Authorization: `Bearer ${token}` },
       next: { tags: ["listar"] },
     });
@@ -31,11 +31,11 @@ export async function getAlunos() {
   }
 }
 
-export async function deleteAluno(id: number) {
+export async function deleteCursos(id: number) {
   const cookiesStore = await cookies();
   const token = cookiesStore.get("access_token")?.value;
 
-  const response = await fetch(`http://localhost:8080/alunos/${id}`, {
+  const response = await fetch(`http://localhost:8080/cursos/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
