@@ -1,4 +1,4 @@
-import CursosItem from "@/componentes/AlunoItem";
+import CursosItem from "@/componentes/CursoItem";
 import { getCursos } from "./actions";
 import Link from "next/link";
     
@@ -18,7 +18,7 @@ export default async function CursosPage() {
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                     <ul className="space-y-3">
                         {cursos.map((curso) => (
-                            <CursosItem key={curso.id} nome={curso.name} id={curso.id}/>
+                            <CursosItem key={curso.id} nome={curso.nome} id={curso.id}/>
                         ))}
                     </ul>
                 </div>

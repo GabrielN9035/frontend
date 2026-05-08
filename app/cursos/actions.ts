@@ -1,11 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { Aluno } from "@/interfaces/alunos";
+import { Curso } from "@/interfaces/cursos";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function getAlunos() {
+export async function getCursos() {
   try {
     const cookiesStore = await cookies();
     const token = cookiesStore.get("access_token")?.value;
@@ -21,7 +21,7 @@ export async function getAlunos() {
 
     if (response.status === 200) {
       const data = await response.json();
-      return data as Aluno[];
+      return data as Curso[];
     }
     console.error(response);
     return [];
@@ -31,7 +31,7 @@ export async function getAlunos() {
   }
 }
 
-export async function deleteCursos(id: number) {
+export async function deleteCurso(id: number) {
   const cookiesStore = await cookies();
   const token = cookiesStore.get("access_token")?.value;
 
@@ -53,5 +53,5 @@ export async function deleteCursos(id: number) {
     redirect("/login");
   }
 
-  return data as Aluno;
+  return data as Curso;
 }
